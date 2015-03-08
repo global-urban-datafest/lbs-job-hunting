@@ -33,7 +33,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.jsp">HR</a>
+                <a class="navbar-brand" href="index.jsp">LBS Job</a>
             </div>
 			<c:if test="${sessionScope.loginType!=null && '1' eq sessionScope.loginType}">
 	            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -45,7 +45,7 @@
 	                                <a href="/user_userProfileForward.do?id=${sessionScope.loginUser.id}">个人信息</a>
 	                            </li>
 	                            <li>
-	                                <a href="/user_findAllResumes.do?id=${sessionScope.loginUser.id}">个人简历</a>
+	                                <a href="/user_findAllResumes.do?id=${sessionScope.loginUser.id}">个人履历</a>
 	                            </li>
 	                            <li>
 	                                <a href="/user_EmployRelationHistory.do">历史投递信息</a>
@@ -56,7 +56,7 @@
 	                        </ul>
 	                    </li>
  	                    <li class="dropdown">
-	                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">职场<b class="caret"></b></a>
+	                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">就业职场<b class="caret"></b></a>
 	                        <ul class="dropdown-menu">
 	                            <li>
 	                                <a href="/userCompanyList.jsp">企业列表</a>
