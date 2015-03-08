@@ -53,14 +53,14 @@
                         <label for="name" class="col-sm-2 control-label">用户名</label>
 
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="username" name="user.name" placeholder="用户名" value="tony">
+                            <input type="text" class="form-control" id="username" name="user.name" placeholder="用户名" value="aaa">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="password" class="col-sm-2 control-label">密码</label>
                         <input type="hidden" name="loginType" value="1">
                         <div class="col-sm-4">
-                            <input type="password" class="form-control" id="userpass" name="user.password" placeholder="密码" value='1qazxsw2'>
+                            <input type="password" class="form-control" id="userpass" name="user.password" placeholder="密码" value='123456'>
                         </div>
                     </div>
                     <div class="form-group">
@@ -89,14 +89,14 @@
                         <label for="name" class="col-sm-2 control-label">会员名:</label>
 
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="companyName" name="company.cpy_loginName" placeholder="会员名" value="zxcvbn">
+                            <input type="text" class="form-control" id="companyName" name="company.cpy_loginName" placeholder="会员名" value="bbb">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="password" class="col-sm-2 control-label">会员密码:</label>
                         <input type="hidden" name="loginType" value="2">
                         <div class="col-sm-4">
-                            <input type="password" class="form-control" id="companyPass" name="company.cpy_loginPass" placeholder="会员密码" value="1qazxsw2">
+                            <input type="password" class="form-control" id="companyPass" name="company.cpy_loginPass" placeholder="会员密码" value="123456">
                         </div>
                     </div>
                     <div class="form-group">

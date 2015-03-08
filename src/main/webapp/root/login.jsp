@@ -40,7 +40,7 @@
       <div class="clear"></div>
       <p>
         <label>密码:</label>
-        <input class="text-input" type="password" name="rootUser.loginPass" value="1qazxsw2"/>
+        <input class="text-input" type="password" name="rootUser.loginPass" value="123456"/>
       </p>
       <div class="clear"></div>
       <p>
