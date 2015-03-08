@@ -43,7 +43,7 @@
 <c:if test="${sessionScope.loginType!=null && '1' eq sessionScope.loginType}">
     <div class="row">
 		<div class="col-md-12">
-		 	<h2>热门企业</h2>
+		 	<h2>推荐企业</h2>
 			<div>
 				<c:if test="${!empty sessionScope.companylist }">
 					<c:forEach var="company" items="${sessionScope.companylist}">
