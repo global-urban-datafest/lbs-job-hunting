@@ -1,0 +1,11 @@
+*.class
+jobhunting.iml
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+/target/*
+/logs/*
+/.idea/*

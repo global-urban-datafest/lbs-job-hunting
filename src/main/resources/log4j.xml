@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration>
+    <!-- org.apache.log4j.ConsoleAppender （输出到控制台），
+         org.apache.log4j.FileAppender    （输出到文件），
+         org.apache.log4j.DailyRollingFileAppender（每天输出产生一个日志文件），
+         org.apache.log4j.RollingFileAppender（文件大小到达指定尺寸的时候产生一个新的文件），可通过 log4j.appender.R.MaxFileSize=100KB 设置文件大小，还可通过 log4j.appender.R.MaxBackupIndex=1，设置为保存一个备份文件。
+         org.apache.log4j.WriterAppender（将日志信息以流格式发送到任意指定的地方）
+    -->
+    <!--
+         %m 输出代码中指定的消息
+         %p 输出优先级，即 DEBUG ， INFO ， WARN ， ERROR ， FATAL
+         %r 输出自应用启动到输出该 log 信息耗费的毫秒数
+         %c 输出打了Log的类名，%c{1}从类名开始输出一个，例如com.tongshida.Action，{1}时只输出Action，{2}输出 tongshida.Action
+         %C 输出.Error(）方法所在的类。
+         %M 输出生成LOG的类当中的方法名称
+         %t 输出产生该日志事件的线程名
+         %n 输出一个回车换行符， Windows 平台为 “rn”,Unix 平台为 “n”
+         %d 输出日志时间点的日期或时间，默认格式为 ISO8601 ，也可以在其后指定格式，比如： %d{yyyy MMM dd HH:mm:ss,SSS} ，输出类似:2002 年 10 月 18 日 22 ： 10 ： 28 ， 921
+         %l 输出日志事件的发生位置，包括类目名、发生的线程，以及在代码中的行数。
+         %[数值]p 输出的%p字符串长度小于[数值]时，补空格，默认右对齐，前加-号，左对齐，这里也可以是%m等别的
+         %.[数值]p输出的%p字符串长度大于[数值]，后面切掉。
+         %[数值].[数值]p 就是综合上两行。
+     -->
+    <!--
+             org.apache.log4j.HTMLLayout（以 HTML 表格形式布局），
+             org.apache.log4j.PatternLayout（可以灵活地指定Log内容布局模式），
+             org.apache.log4j.SimpleLayout（包含日志信息的级别和信息字符串），
+             org.apache.log4j.TTCCLayout（包含日志产生的时间、线程、类别等等信息）
+    -->
+    <!-- 输出通道"CONSOLE"，输出所有信息到控制台-->
+    <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+        <!-- 输出自定义内容的LOG -->
+        <layout class="org.apache.log4j.PatternLayout">
+            <!-- 输出时Log内容的具体定义 -->
+            <param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss,SSS}][%c{4}] %-5p:%m%n"/>
+        </layout>
+    </appender>
+
+    <!-- 输出通道"DEBUG"，输出方式是：只输出DEBUG级别的LOG，并文件大小到达指定大小时产生新的Log文件 -->
+    <appender name="DEBUG" class="org.apache.log4j.RollingFileAppender">
+        <!-- 输出Log文件的路径和文件名 -->
+        <param name="File" value="logs/debug/debug.log"/>
+        <!-- TOMCAT等WEB服务器重新启动时，是否插入到原有的LOG文件里，true： 插入 false： 新建 -->
+        <param name="Append" value="true"/>
+        <!-- 只输出定义的级别以上的LOG,因为在下面过滤LOG信息所以屏蔽 -->
+        <!-- param name="Threshold" value="info"/ -->
+        <!-- 因选择了RollingFileAppender了才有下面两个 MaxFileSize，MaxBackupIndex 选项 -->
+        <!-- MaxFileSize是一个LOG文件的最大的文件大小，当LOG文件超过这个值时，自动转成 *.log.1的LOG文件 -->
+        <param name="MaxFileSize" value="500KB"/>
+        <!-- MaxBackupIndex生成自动转成 *.log.1的LOG文件的个数，设置3时最多生成3个LOG备份文件，它们是[*.log.1][*.log.2][*.log.3] -->
+        <param name="MaxBackupIndex" value="2"/>
+        <!-- 输出时Log内容的具体定义 -->
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss,SSS}][%c{4}] %-5p:%m%n"/>
+        </layout>
+        <!-- 过滤输出时Log内容，在这里，LevelMin，LevelMax都定义了DEBUG，所以只输出DEBUG级别LOG的数据 -->
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <!-- 指定输出LOG内容的最低等级 -->
+            <param name="LevelMin" value="DEBUG"/>
+            <!-- 指定输出LOG内容的最高等级 -->
+            <param name="LevelMax" value="DEBUG"/>
+        </filter>
+    </appender>
+    <!-- 输出通道"INFO"，输出方式是：只输出INFO级别的LOG，并文件大小到达指定大小时产生新的Log文件 -->
+    <appender name="INFO" class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="logs/info/info.log"/>
+        <param name="Append" value="true"/>
+        <param name="MaxFileSize" value="500KB"/>
+        <param name="MaxBackupIndex" value="2"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss,SSS}][%c{4}] %-5p:%m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="INFO"/>
+            <param name="LevelMax" value="INFO"/>
+        </filter>
+    </appender>
+    <!-- 输出通道"WARN"，输出方式是：只输出WARN级别的LOG，并文件大小到达指定大小时产生新的Log文件 -->
+    <appender name="WARN" class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="logs/warn/warn.log"/>
+        <param name="Append" value="true"/>
+        <param name="MaxFileSize" value="500KB"/>
+        <param name="MaxBackupIndex" value="2"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss,SSS}][%c{4}] %-5p:%m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="WARN"/>
+            <param name="LevelMax" value="WARN"/>
+        </filter>
+    </appender>
+    <!-- 输出通道"ERROR"，输出方式是：只输出ERROR级别的LOG，并文件大小到达指定大小时产生新的Log文件 -->
+    <appender name="ERROR" class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="logs/error/error.log"/>
+        <param name="Append" value="true"/>
+        <param name="MaxFileSize" value="500KB"/>
+        <param name="MaxBackupIndex" value="2"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss,SSS}][%c{4}] %-5p:%m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="ERROR"/>
+            <param name="LevelMax" value="ERROR"/>
+        </filter>
+    </appender>
+
+    <!-- 输出通道"ALL"，输出方式是：输出所有级别的LOG，并文件大小到达指定大小时产生新的Log文件 -->
+    <appender name="ALL" class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="logs/all/all.log"/>
+        <param name="Append" value="true"/>
+        <param name="MaxFileSize" value="500KB"/>
+        <param name="MaxBackupIndex" value="2"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss,SSS}][%c{4}] %-5p:%m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="DEBUG"/>
+            <param name="LevelMax" value="FATAL"/>
+        </filter>
+    </appender>
+    <!-- 输出通道"EVERYDAY"，输出方式是：输出所有级别的LOG，并每天一个日志文件 -->
+    <!--<appender name="EVERYDAY" class="org.apache.log4j.DailyRollingFileAppender">
+     <param name="File" value="logs/ereryday/ereryday.log"/>
+     <param name="Append" value="true"/>
+     &lt;!&ndash; param name="Threshold"   value="DEBUG"/ &ndash;&gt;
+     &lt;!&ndash; 以日为单位输出LOG文件，每日输出一个LOG文件&ndash;&gt;
+     <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+     &lt;!&ndash; 以时为单位输出LOG文件，每小时输出一个LOG文件
+     <param name="DatePattern" value="'.'yyyy-MM-dd-HH"/>
+     &ndash;&gt;
+     <layout class="org.apache.log4j.PatternLayout">
+      &lt;!&ndash; The default pattern: Date Priority [Category] Message &ndash;&gt;
+             <param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss,SSS}][%c{4}] %-5p:%m%n"/>
+      &lt;!&ndash; The full pattern: Date MS Priority [Category] (Thread:NDC)  Message <param name="ConversionPattern"  value="%d %-5r %-5p [%c] (%t:%x) %m%n"/>
+      &ndash;&gt;
+     </layout>
+     &lt;!&ndash; 过滤输出时Log内容，在这里，LevelMin是DEBUG，LevelMax都FATAL，所以输出DEBUG级别到FATAL级别的LOG数据 &ndash;&gt;
+     <filter class="org.apache.log4j.varia.LevelRangeFilter">
+      <param name="LevelMin" value="DEBUG"/>
+      <param name="LevelMax" value="FATAL"/>
+     </filter>
+    </appender>-->
+
+    <!--
+        &lt;!&ndash; 输出通道"FATAL"，输出方式是：只输出INFO级别的LOG，并文件大小到达指定大小时产生新的Log文件 &ndash;&gt;
+        <appender name="FATAL" class="org.apache.log4j.RollingFileAppender">
+            <param name="File" value="logs/fatal/fatal.log"/>
+            <param name="Append" value="true"/>
+            <param name="MaxFileSize" value="500KB"/>
+            <param name="MaxBackupIndex" value="2"/>
+            <layout class="org.apache.log4j.PatternLayout">
+             <param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss,SSS}][%c{4}] %-5p:%m%n"/>
+            </layout>
+            <filter class="org.apache.log4j.varia.LevelRangeFilter">
+                <param name="LevelMin" value="FATAL"/>
+                <param name="LevelMax" value="FATAL"/>
+            </filter>
+        </appender>
+    -->
+
+    <root>
+        <!-- 设置输出范围，在这里光输出ERROR以上的，ERROR级别，FATAL级别的LOG -->
+        <priority value="ERROR"/>
+        <!-- 上边设置的输出通道，使用的在这里定义 -->
+        <!--    <appender-ref ref="ALL"/>
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="DEBUG"/>
+            <appender-ref ref="WARN"/>-->
+        <appender-ref ref="ALL"/>
+        <appender-ref ref="ERROR"/>
+        <appender-ref ref="CONSOLE"/>
+        <!--
+            <appender-ref ref="EVERYDAY"/>
+            <appender-ref ref="FATAL"/>
+         -->
+    </root>
+</log4j:configuration>  

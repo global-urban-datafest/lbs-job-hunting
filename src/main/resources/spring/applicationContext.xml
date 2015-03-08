@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+    <import resource="applicationContext-dataSource.xml"/>
+    <!--spring容器根据注解自动寻找依赖关系，并注入-->
+    <context:component-scan base-package="co.working"/>
+    <!-- DataSource properties file Config-->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+    <!--配置sessionFactory bean-->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <!--注入数据源-->
+        <property name="dataSource" ref="dataSource"/>
+        <!--加载mappers下所有的以.hbm.xml结尾的文件-->
+        <property name="packagesToScan" value="co.working.*"/>
+        <!--加载hibernate的配置文件，这里使用的是.properties-->
+        <property name="hibernateProperties" value="hibernate.properties"/>
+    </bean>
+    <bean id="txManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <aop:config>
+        <aop:pointcut id="bussinessService"
+                      expression="execution(* co.working.dao.*.*(..))"/>
+        <aop:advisor pointcut-ref="bussinessService"
+                     advice-ref="txAdvice"/>
+    </aop:config>
+    <tx:advice id="txAdvice" transaction-manager="txManager">
+        <tx:attributes>
+            <tx:method name="get*" read-only="false" propagation="NOT_SUPPORTED"/>
+            <tx:method name="find*" read-only="false" propagation="NOT_SUPPORTED"/>
+            <!--根据DAO层的方法，若是要进行数据库的insert，uodate，delete的操作时，必须配置事务，不然会默认将session设置成FlushMode.NEVER,FlushMode.MANUAL,将会抛出org.springframework.dao.InvalidDataAccessApiUsageException-->
+            <tx:method name="merge*" propagation="REQUIRED"/>
+            <tx:method name="save*" propagation="REQUIRED"/>
+            <!--如果不把save update delete都配置上，-->
+            <tx:method name="update*" propagation="REQUIRED"/>
+            <!--//这些操作会无效-->
+            <tx:method name="delete*" propagation="REQUIRED"/>
+        </tx:attributes>
+    </tx:advice>
+</beans>

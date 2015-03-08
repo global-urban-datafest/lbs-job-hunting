@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+        "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+    <constant name="struts.i18n.encoding" value="utf-8"/>
+    <constant name="struts.action.extension" value="do"/>
+    <package name="default" extends="json-default" namespace="/">
+        <action name="user_*" class="userAction" method="{1}">
+        	<result name="login">/login.jsp</result>
+            <result name="loginError" >/login.jsp</result>
+            <result name="userLoginSuccess">/index.jsp</result>
+            <result name="registerError">/register.jsp</result>
+            <result name="registerLoginSuccess">/login.jsp</result>
+            <result name="logoutSuccess">/login.jsp</result>
+            <result name="userProfile">/myprofile.jsp</result>
+            <result name="resumeList">/resumelist.jsp</result>
+            <result name="resumeDetail">/myresume.jsp</result>
+            <result name="userPass">/updateUserPass.jsp</result>
+            <result name="viewResumeShow">/myresumeshow.jsp</result>
+            <result name="{1}">{1}.jsp</result>
+            <result type="json" name="ajaxSuccess">
+                <param name="data">data</param>
+            </result>
+            <result type="json" name="ajaxNameSuccess">
+                <param name="data">msg</param>
+            </result>
+            <result type="json" name="ajaxPageSuccess">
+                <param name="root">data</param>
+            </result>
+        </action>
+        <action name="company_*" class="companyAction" method="{1}">
+        	<result name="login">/login.jsp</result>
+        	<result name="loginError" >/login.jsp</result>
+        	<result name="userLoginSuccess">/index.jsp</result>
+        	<result name="registerError">/register.jsp</result>
+            <result name="registerLoginSuccess">/login.jsp</result>
+            <result name="userProfile">/companyProfile.jsp</result>
+            <result name="logoutSuccess">/login.jsp</result>
+            <result name="userPass">/updateCompanyPass.jsp</result>
+            <result name="hireinfoList">/hireinfoList.jsp</result>
+            <result name="updateHireinfo">/updateHireinfo.jsp</result>
+            <result type="json" name="ajaxSuccess">
+                <param name="data">data</param>
+            </result>
+            <result type="json" name="ajaxPageSuccess">
+                <param name="root">data</param>
+            </result>
+        </action>
+        <action name="uploadAction_*" class="uploadAction" method="{1}">
+            <result name="{1}_success" type="json">
+                <param name="root">obj</param>
+            </result>
+            <result name="input">/uploadFile.jsp</result>
+            <interceptor-ref name="fileUpload">
+                <!-- 文件过滤 <param name="allowedTypes">image/bmp,image/png,image/gif,image/jpeg,application/xml</param> -->
+                <!-- 文件大小, 以字节为单位 -->
+                <param name="maximumSize">1025956</param>
+            </interceptor-ref>
+            <!-- 默认拦截器必须放在fileUpload之后，否则无效 -->
+            <interceptor-ref name="defaultStack" />
+        </action>
+      </package>
+      <package name="root" extends="json-default" namespace="/root">
+            <action name="rootUser_*" class="rootUser" method="{1}">
+		        <result name="loginSuccess">/root/main.jsp</result>
+		        <result name="login">/root/login.jsp</result>
+		        <result name="addRootUser">/root/addRootUser.jsp</result>
+	        	<result name="{1}">/root/{1}.jsp</result>
+	        	<result type="json" name="ajaxPageSuccess">
+	                <param name="root">data</param>
+	            </result>
+        	</action>
+    </package>
+</struts>    
