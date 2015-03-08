@@ -8,9 +8,12 @@
 %>
 <!DOCTYPE html>
 <html lang="zh-cn">
-<jsp:include page="common.jsp"/>
 <head>
+
+<jsp:include page="common.jsp"/>
+
     <title>首页</title>
+
     <script type="text/javascript">
     $(document).ready(function(){
 /*     	$.post('',{},function(data){
@@ -26,19 +29,38 @@
     	window.location.href="<%=basePath%>user_userCompanyProfile.do?id="+id;
     }
     </script>
+    <script src="http://api.map.baidu.com/api?v=2.0&ak=r2jbbgbfMXILwI8TMNbsGgak"></script>
+    <link type="text/css" rel="stylesheet" href="<%=basePath%>css/map.css"/>
 </head>
 <body>
 <jsp:include page="header.jsp" flush="true"/>
 <div class="container">
     <div class="row">
-        <div class="jumbotron">
-            <h2>LBS Job Hunting for Disabled！</h2>
-            <p>
-                An LBS Tool to increase the efficiency of job-hunting for the disabled people.
+        <div class="hotmap" id="hotmapbody">
+            <div class="hotmapl">
+                <div class="menu m0 active" data="all"><span></span>
+                    <p>全部</p>
 
-            </p>
-            <p><a class="btn btn-primary btn-lg" role="button" href="<%=basePath%>otherdetail.jsp">查看详情</a></p>
+                </div>
+                <div class="menu m1 active" data="user"><span></span>
+                    <p>求职者</p>
+
+                </div>
+                <div class="menu m6" data="comp"><span></span>
+                    <p>企业</p>
+                </div>
+            </div>
+            <div class="hotmapc" id="hotmapc"> <span class="full_Btn"></span>
+                <div id="hotmap"></div>
+            </div>
+            <div class="hotmapr">
+                <div class="hotmapr_contnet" id="hotmapRightBar">
+                </div>
+            </div>
         </div>
+        <jsp:include page="mapfunc.jsp"/>
+        <input type="hidden" name="userCheck" class="checkValue" id="userCheck" value="1"/>
+        <input type="hidden" name="compCheck" class="checkValue" id="compCheck" value="0"/>
     </div>
 <c:if test="${sessionScope.loginType!=null && '1' eq sessionScope.loginType}">
     <div class="row">
